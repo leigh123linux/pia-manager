@@ -197,11 +197,11 @@ class Manager(Gtk.Application):
             self.password.set_visibility(not self.password.get_visibility())
 
     def on_forgot_password_clicked(self, label, uri):
-        subprocess.Popen(["su", "-c", "xdg-open https://www.privateinternetaccess.com/pages/reset-password.html", self.linux_username])
+        subprocess.Popen(["sudo", "-u", self.linux_username, "xdg-open", "https://www.privateinternetaccess.com/pages/reset-password.html"])
         return True # needed to suppress the link callback in Gtk.Entry
 
     def on_menuitem_help_contents_activated(self, menuitem):
-        subprocess.Popen(["su", "-c", "xdg-open https://helpdesk.privateinternetaccess.com", self.linux_username])
+        subprocess.Popen(["sudo", "-u", self.linux_username, "xdg-open", "https://helpdesk.privateinternetaccess.com"])
 
     def on_menuitem_help_about_activated(self, menuitem):
         dlg = Gtk.AboutDialog()
@@ -230,7 +230,7 @@ class Manager(Gtk.Application):
             if res == Gtk.ResponseType.CANCEL or res == Gtk.ResponseType.DELETE_EVENT:
                 w.hide()
         def activate_link(label, uri):
-            subprocess.Popen(["su", "-c", "xdg-open http://www.github.com/linuxmint/pia-manager", self.linux_username])
+            subprocess.Popen(["sudo", "-u", self.linux_username, "xdg-open", "http://www.github.com/linuxmint/pia-manager"])
             return True # needed to suppress the link callback in Gtk.Entry
         dlg.connect("response", close)
         dlg.connect("activate-link", activate_link)
